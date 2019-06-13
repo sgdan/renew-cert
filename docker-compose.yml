@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  renewcert:
+    build: .
+    volumes:
+    - .:/working
+    - ~/.aws:/root/.aws
+    working_dir: /working
