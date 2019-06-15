@@ -17,14 +17,17 @@ email = os.environ['EMAIL']
 region = os.environ['AWS_DEFAULT_REGION']
 domain = os.environ['DOMAIN']
 
-ssm = boto3.client('ssm')
+ssm = boto3.client('ssm', region_name=region)
 prefix = '/cert/' + domain.replace('*', '_')
-should_renew = True
+cert = None
 try:
-    # print 'looking for param:', prefix + '/chain'
     param = ssm.get_parameter(Name=prefix+'/chain', WithDecryption=True)
     cert = param['Parameter']['Value']
+except ssm.exceptions.ParameterNotFound:
+    print 'No certificate in SSM'
 
+should_renew = True
+if cert:
     # check if cert expires in the next 7 days
     with open(os.devnull, 'w') as devnull:
         sp = Popen(['openssl', 'x509', '-noout', '-checkend', str(7*24*60*60)], stdin=PIPE, stdout=devnull)
@@ -32,8 +35,6 @@ try:
     if sp.returncode == 0:
         should_renew = False
         print 'Certificate will not expire in the next 7 days'
-except:
-    print 'No certificate in SSM'
 
 if should_renew:
     print 'Renewing certificate...'
