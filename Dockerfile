@@ -5,4 +5,5 @@ ENV DOMAIN example.com
 ENV AWS_REGION us-east-1
 
 COPY update.py /usr/local/bin/update
+RUN chmod a+x /usr/local/bin/update
 ENTRYPOINT ["update"]
