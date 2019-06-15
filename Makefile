@@ -13,5 +13,5 @@ run: .build
 	@docker-compose run --rm \
 		-e EMAIL=$(email) \
 		-e DOMAIN=$(domain) \
-		-e AWS_REGION=$(region) \
+		-e AWS_DEFAULT_REGION=$(region) \
 		renewcert

@@ -14,7 +14,7 @@ def write(ssm, key, value):
     ssm.put_parameter(Name=key, Value=value, Type='SecureString', Overwrite=True)
 
 email = os.environ['EMAIL']
-region = os.environ['AWS_REGION']
+region = os.environ['AWS_DEFAULT_REGION']
 domain = os.environ['DOMAIN']
 
 ssm = boto3.client('ssm')

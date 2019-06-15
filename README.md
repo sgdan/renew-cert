@@ -15,7 +15,7 @@ email=my.email@my.domain.org domain=my.domain.org region=us-east-1 make run
 docker run --rm \
     -e EMAIL=my.email@my.domain.org \
     -e DOMAIN=my.domain.org \
-    -e AWS_REGION=us-east-1 \
+    -e AWS_DEFAULT_REGION=us-east-1 \
     sgdan/renew-cert
 ```
 
